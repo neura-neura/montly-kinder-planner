@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Generador de prompt mensual</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Planeación escolar</p>
+        <h1>Generador de prompt mensual</h1>
+      </div>
+      <div class="status" id="saveStatus" aria-live="polite">Listo para editar</div>
+    </header>
+
+    <main class="app-shell">
+      <form class="editor" id="promptForm">
+        <section class="form-section" aria-labelledby="archivo-title">
+          <div class="section-heading">
+            <span class="step">1</span>
+            <div>
+              <h2 id="archivo-title">Archivo y periodo</h2>
+              <p>Datos del proyecto anterior y del nuevo mes.</p>
+            </div>
+          </div>
+
+          <div class="field-grid two">
+            <label class="field">
+              <span>Archivo del último proyecto</span>
+              <input
+                id="lastFileName"
+                name="lastFileName"
+                type="text"
+                placeholder="Proyecto abril 2026.docx"
+                autocomplete="off"
+              />
+            </label>
+
+            <label class="field">
+              <span>Mes del proyecto anterior</span>
+              <input
+                id="previousMonth"
+                name="previousMonth"
+                type="text"
+                placeholder="abril"
+                autocomplete="off"
+              />
+            </label>
+
+            <label class="field">
+              <span>Mes del nuevo proyecto</span>
+              <input
+                id="newMonth"
+                name="newMonth"
+                type="text"
+                placeholder="mayo"
+                autocomplete="off"
+              />
+            </label>
+          </div>
+        </section>
+
+        <section class="form-section" aria-labelledby="metodologia-title">
+          <div class="section-heading">
+            <span class="step">2</span>
+            <div>
+              <h2 id="metodologia-title">Metodologías</h2>
+              <p>Cambia el enfoque del proyecto anterior al nuevo.</p>
+            </div>
+          </div>
+
+          <div class="field-grid two">
+            <label class="field">
+              <span>Metodología del proyecto anterior</span>
+              <input
+                id="previousMethodology"
+                name="previousMethodology"
+                type="text"
+                placeholder="Aprendizaje basado en proyectos comunitarios"
+                autocomplete="off"
+              />
+            </label>
+
+            <label class="field">
+              <span>Metodología nueva</span>
+              <input
+                id="newMethodology"
+                name="newMethodology"
+                type="text"
+                placeholder="Aprendizaje servicio"
+                autocomplete="off"
+              />
+            </label>
+          </div>
+        </section>
+
+        <section class="form-section" aria-labelledby="documentos-title">
+          <div class="section-heading">
+            <span class="step">3</span>
+            <div>
+              <h2 id="documentos-title">Documentos y fechas</h2>
+              <p>Escribe cada documento o fecha especial en una línea.</p>
+            </div>
+          </div>
+
+          <label class="field">
+            <span>Documentos con actividades</span>
+            <textarea
+              id="activityDocs"
+              name="activityDocs"
+              rows="5"
+              placeholder="Actividades semana 1.pdf&#10;Actividades semana 2.docx"
+            ></textarea>
+          </label>
+
+          <div class="field-grid two">
+            <label class="field">
+              <span>Rango de fechas para el proyecto</span>
+              <input
+                id="dateRange"
+                name="dateRange"
+                type="text"
+                placeholder="del 4 al 29 de mayo"
+                autocomplete="off"
+              />
+            </label>
+
+            <label class="field">
+              <span>Grupo</span>
+              <input id="groupName" name="groupName" type="text" value="" autocomplete="off" />
+            </label>
+          </div>
+
+          <label class="field">
+            <span>Fechas especiales y temática</span>
+            <textarea
+              id="specialDates"
+              name="specialDates"
+              rows="4"
+              placeholder="10 de mayo: Dia de las madres&#10;15 de mayo: Dia del maestro"
+            ></textarea>
+          </label>
+        </section>
+
+        <section class="form-section" aria-labelledby="orden-title">
+          <div class="section-heading">
+            <span class="step">4</span>
+            <div>
+              <h2 id="orden-title">Orden del proyecto</h2>
+              <p>Define fases, momentos u otro rasgo para organizar los días.</p>
+            </div>
+          </div>
+
+          <div class="field-grid three">
+            <label class="field">
+              <span>Rasgo para ordenar</span>
+              <input id="orderTrait" name="orderTrait" type="text" placeholder="Fase" autocomplete="off" />
+            </label>
+
+            <label class="field">
+              <span>Nombre singular</span>
+              <input id="traitSingular" name="traitSingular" type="text" placeholder="fase" autocomplete="off" />
+            </label>
+
+            <label class="field">
+              <span>Nombre plural</span>
+              <input id="traitPlural" name="traitPlural" type="text" placeholder="fases" autocomplete="off" />
+            </label>
+          </div>
+
+          <div class="trait-list" id="traitList" aria-label="Lista de rasgos"></div>
+
+          <div class="button-row">
+            <button class="secondary-button" type="button" id="addTraitButton">Agregar rasgo</button>
+            <button class="ghost-button" type="button" id="resetTraitsButton">Restablecer ejemplo</button>
+          </div>
+        </section>
+
+        <section class="form-section" aria-labelledby="curricular-title">
+          <div class="section-heading">
+            <span class="step">5</span>
+            <div>
+              <h2 id="curricular-title">Datos curriculares</h2>
+              <p>Elementos de la Nueva Escuela Mexicana para orientar el documento.</p>
+            </div>
+          </div>
+
+          <div class="field-grid two">
+            <label class="field">
+              <span>Campo formativo</span>
+              <input
+                id="formativeField"
+                name="formativeField"
+                type="text"
+                placeholder="Lenguajes"
+                autocomplete="off"
+              />
+            </label>
+
+            <label class="field">
+              <span>Eje articulador</span>
+              <input
+                id="axis"
+                name="axis"
+                type="text"
+                placeholder="Artes y experiencias estéticas"
+                autocomplete="off"
+              />
+            </label>
+          </div>
+
+          <label class="field">
+            <span>Contenido</span>
+            <textarea id="content" name="content" rows="3" placeholder="Contenido del programa sintético"></textarea>
+          </label>
+
+          <label class="field">
+            <span>Proceso de Desarrollo de Aprendizaje (PDA)</span>
+            <textarea
+              id="pda"
+              name="pda"
+              rows="3"
+              placeholder="PDA que se trabajará durante el proyecto"
+            ></textarea>
+          </label>
+
+          <label class="field">
+            <span>Rasgo de perfil de egreso</span>
+            <textarea
+              id="graduateProfile"
+              name="graduateProfile"
+              rows="3"
+              placeholder="Rasgo del perfil de egreso adecuado"
+            ></textarea>
+          </label>
+        </section>
+
+        <section class="form-section" aria-labelledby="evaluacion-title">
+          <div class="section-heading">
+            <span class="step">6</span>
+            <div>
+              <h2 id="evaluacion-title">Evaluación y alumnos</h2>
+              <p>Elige instrumento y ajusta la lista TXT de estudiantes.</p>
+            </div>
+          </div>
+
+          <div class="field-grid two">
+            <label class="field">
+              <span>Instrumento de evaluación</span>
+              <select id="assessmentType" name="assessmentType">
+                <option value="rúbrica">Rúbrica</option>
+                <option value="lista de cotejo">Lista de cotejo</option>
+              </select>
+            </label>
+
+            <label class="field file-field">
+              <span>Importar lista TXT</span>
+              <input id="studentFile" type="file" accept=".txt,text/plain" />
+            </label>
+          </div>
+
+          <label class="field">
+            <span>Alumnos</span>
+            <textarea id="students" name="students" rows="12"></textarea>
+          </label>
+
+          <div class="button-row">
+            <button class="secondary-button" type="button" id="downloadStudentsButton">Descargar lista TXT</button>
+            <button class="ghost-button" type="button" id="restoreStudentsButton">Restaurar lista ejemplo</button>
+          </div>
+        </section>
+      </form>
+
+      <aside class="preview-panel" aria-labelledby="preview-title">
+        <div class="preview-heading">
+          <div>
+            <p class="eyebrow">Salida</p>
+            <h2 id="preview-title">Prompt generado</h2>
+          </div>
+          <div class="button-row compact">
+            <button class="primary-button" type="button" id="copyButton">Copiar</button>
+            <button class="secondary-button" type="button" id="downloadPromptButton">Descargar TXT</button>
+          </div>
+        </div>
+
+        <textarea id="promptOutput" class="prompt-output" readonly spellcheck="false"></textarea>
+
+        <div class="helper-strip">
+          <span id="wordCount">0 palabras</span>
+          <span id="studentCount">0 alumnos</span>
+        </div>
+      </aside>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
