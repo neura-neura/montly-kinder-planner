@@ -8,8 +8,8 @@ const defaultStudents = Array.from(
 const defaultTraits = [
   "Recuperación de saberes previos e identificación de necesidades del grupo.",
   "Planeación de acciones, acuerdos y recursos necesarios para el proyecto.",
-  "Desarrollo de actividades centrales con participacion activa del grupo.",
-  "Socializacion de avances, producciones y experiencias del proyecto.",
+  "Desarrollo de actividades centrales con participación activa del grupo.",
+  "Socialización de avances, producciones y experiencias del proyecto.",
   "Reflexión, cierre y evaluación de los aprendizajes logrados.",
 ];
 
@@ -34,6 +34,7 @@ const fieldIds = [
   "assessmentType",
   "rubricDocument",
   "students",
+  "literatureBook",
 ];
 
 const dom = {
@@ -199,28 +200,142 @@ function buildTraitBlock() {
   const traitSingular = valueOr("traitSingular", "[NOMBRE DE RASGO EN SINGULAR]");
   const traitPlural = valueOr("traitPlural", "[NOMBRE DE RASGO EN PLURAL]");
   const traitCount = traits.length || "[NUMERO DE RASGOS]";
+  const traitCountLabel = traits.length === 5 ? "cinco" : traitCount;
   const lastTrait = traits.length || "[ULTIMO NUMERO DE RASGO]";
+  const pluralArticle = traitPlural.toLowerCase() === "fases" ? "Las" : "Los";
   const traitLines = traits.length
     ? traits.map((trait, index) => `\t- ${index + 1}. ${trait.trim() || "[DESCRIPCIÓN DE RASGO]"}`).join("\n")
     : "\t- [RASGO NO. DESCRIPCIÓN DE RASGO]";
 
-  return `- ${valueOr("orderTrait", "[RASGO PARA ORDENAR]")}: son ${traitCount} ${traitPlural}, tú vas a decidir cuántos días abarca cada ${traitSingular}, se empieza por la 1 y se termina en la ${lastTrait}. Los ${traitPlural} son:\n${traitLines}`;
+  return `- ${valueOr("orderTrait", "[RASGO PARA ORDENAR]")}: son ${traitCountLabel} ${traitPlural}, tú vas a decidir cuántos días abarca cada ${traitSingular}, comienza con la 1 y termina con la ${lastTrait}. ${pluralArticle} ${traitPlural} son:\n${traitLines}`;
 }
 
 function buildSpecialDatesBlock() {
   const lines = linesFrom(getValue("specialDates"));
 
   if (!lines.length) {
-    return ", y de los días [FECHAS ESPECIALES] vas a tomar en cuenta que se va a hacer [DESCRIPCIÓN DE LA TEMÁTICA ESPECIAL DE CADA DÍA], así que vas a hacer actividades relacionadas a esto.";
+    return ". En las fechas especiales [FECHAS ESPECIALES], toma en cuenta que se realizará [DESCRIPCIÓN DE LA TEMÁTICA ESPECIAL DE CADA DÍA] y desarrolla actividades relacionadas con cada temática.";
   }
 
-  return `. Para las fechas especiales, toma en cuenta lo siguiente:\n${asBullets(lines)}\nAsí que vas a hacer actividades relacionadas con esto.`;
+  return `. Para las fechas especiales, toma en cuenta lo siguiente:\n${asBullets(lines)}\nDesarrolla actividades relacionadas con cada temática.`;
 }
 
 function buildAssessmentBlock(assessmentType) {
   const rubricDocument = valueOr("rubricDocument", "[NOMBRE DEL DOCUMENTO DE LA RÚBRICA]");
 
-  return `- Después de la portada, cada día tiene que estar en una página. En seguida de eso, elabora una ${assessmentType} tomando en cuenta el Contenido y el Proceso de Desarrollo de Aprendizaje del proyecto, esta debe servir para evaluar el proyecto. Utiliza el documento ${rubricDocument}, en este se encuentra la plantilla, toma todos los datos de ahí para que la completes, los alumnos a los que se van a evaluar son los siguientes:`;
+  return `- Después de todas las páginas de los días, elabora una ${assessmentType} tomando en cuenta el Contenido y el Proceso de Desarrollo de Aprendizaje del proyecto. Esta debe servir para evaluar el proyecto. Utiliza el documento ${rubricDocument}, ya que contiene la plantilla; toma todos sus datos y complétala.`;
+}
+
+function buildMethodPhiladelphiaBlock() {
+  const literatureBook = valueOr(
+    "literatureBook",
+    "[ESPACIO PARA INCLUIR EL NOMBRE DEL LIBRO DE LITERATURA SELECCIONADO]",
+  );
+
+  return `
+
+Debajo de la información de cada día —fase, actividades y recursos— incluye una sección titulada “Actividades del Método Filadelfia”. Utiliza el horario correspondiente al día de la semana. Escribe todos los nombres completos y no utilices abreviaturas. Conserva las actividades de la planeación del proyecto en el horario indicado y aclara que corresponden a las actividades de la sección superior de esta misma página.
+
+Todos los días deben incluir:
+
+- 11:35: Cuestionamiento sobre la actividad del proyecto realizada ese día.
+- 11:45: Lectura del libro de Literatura seleccionado y, después, lectura del Libro Casero 1, Libro Casero 2 y el abecedario correspondiente.
+- 12:00: Despedida y entrega de alumnos.
+
+Utiliza estas equivalencias:
+
+- PB: Palabras Base.
+- G1: Grupo 1.
+- G2: Grupo 2.
+- L1: Libro Casero 1.
+- L2: Libro Casero 2.
+- Lit.: Literatura.
+- ABC: abecedario.
+
+Horario del lunes:
+
+- 9:05: Honores a la Bandera.
+- 9:15: Hacer la lectura de Palabras Base, Grupo 1 y Grupo 2.
+- 9:20: Realizar Gateo y Arrastre durante 5 minutos de gateo y 5 minutos de arrastre.
+- 9:30: Hacer la lectura del Grupo 1, Grupo 2 y Libro Casero 1.
+- 9:35: Realizar las actividades de la planeación del proyecto, es decir, las actividades que aparecen en la sección superior de esta misma página.
+- 10:30: Hacer la lectura del Grupo 1, Grupo 2 y Libro Casero 2.
+- 10:35: Lavado de manos.
+- 10:40: Refrigerio.
+- 11:00: Recreo.
+- 11:30: Lavado de manos.
+- 11:35: Cuestionamiento sobre la actividad del proyecto realizada ese día.
+- 11:45: Leer el libro de Literatura seleccionado. Después, hacer la lectura del Libro Casero 1, Libro Casero 2 y el abecedario en minúscula, en orden.
+- 12:00: Despedida y entrega de alumnos.
+- Libro de Literatura seleccionado: ${literatureBook}.
+
+Horario del martes:
+
+- 9:05: Hacer la lectura de Palabras Base, Grupo 1 y Grupo 2. Realizar el repaso de las lecturas anteriores de Palabras Base, Grupo 1 y Grupo 2.
+- 9:15: Realizar Gateo y Arrastre durante 5 minutos de gateo y 5 minutos de arrastre.
+- 9:25: Hacer la lectura del Grupo 1, Grupo 2 y Libro Casero 1.
+- 9:30: Realizar las actividades de la planeación del proyecto, es decir, las actividades que aparecen en la sección superior de esta misma página.
+- 10:20: Realizar Educación Física.
+- 10:30: Hacer la lectura del Grupo 1, Grupo 2 y Libro Casero 2. Realizar el repaso de las lecturas anteriores del Grupo 1, Grupo 2, Libro Casero 1 y Libro Casero 2.
+- 10:35: Lavado de manos.
+- 10:40: Refrigerio.
+- 11:00: Recreo.
+- 11:30: Lavado de manos.
+- 11:35: Cuestionamiento sobre la actividad del proyecto realizada ese día.
+- 11:45: Hacer la lectura del libro de Literatura seleccionado, Libro Casero 1, Libro Casero 2 y el abecedario en mayúscula, en orden.
+- 12:00: Despedida y entrega de alumnos.
+- Libro de Literatura seleccionado: ${literatureBook}.
+
+Horario del miércoles:
+
+- 9:05: Hacer la lectura de Palabras Base, Grupo 1 y Grupo 2. Realizar el repaso de las lecturas anteriores de Palabras Base, Grupo 1 y Grupo 2.
+- 9:15: Realizar Gateo y Arrastre durante 5 minutos de gateo y 5 minutos de arrastre.
+- 9:25: Hacer la lectura del Grupo 1, Grupo 2 y Libro Casero 1.
+- De 9:30 a 10:30: Realizar las actividades de la planeación del proyecto, es decir, las actividades que aparecen en la sección superior de esta misma página. Este día no se realiza Educación Física.
+- 10:30: Hacer la lectura del Grupo 1, Grupo 2 y Libro Casero 2. Realizar el repaso de las lecturas anteriores del Grupo 1, Grupo 2, Libro Casero 1 y Libro Casero 2.
+- 10:35: Lavado de manos.
+- 10:40: Refrigerio.
+- 11:00: Recreo.
+- 11:30: Lavado de manos.
+- 11:35: Cuestionamiento sobre la actividad del proyecto realizada ese día.
+- 11:45: Hacer la lectura del libro de Literatura seleccionado, Libro Casero 1, Libro Casero 2 y el abecedario en minúscula y en desorden.
+- 12:00: Despedida y entrega de alumnos.
+- Libro de Literatura seleccionado: ${literatureBook}.
+
+Horario del jueves:
+
+- 9:05: Hacer la lectura de Palabras Base, Grupo 1 y Grupo 2. Realizar el repaso de las lecturas anteriores de Palabras Base, Grupo 1 y Grupo 2.
+- 9:15: Realizar Gateo y Arrastre durante 5 minutos de gateo y 5 minutos de arrastre.
+- 9:25: Hacer la lectura del Grupo 1, Grupo 2 y Libro Casero 1.
+- 9:30: Realizar las actividades de la planeación del proyecto, es decir, las actividades que aparecen en la sección superior de esta misma página.
+- 10:20: Realizar Educación Física.
+- 10:30: Hacer la lectura del Grupo 1, Grupo 2 y Libro Casero 2. Realizar el repaso de las lecturas anteriores del Grupo 1, Grupo 2, Libro Casero 1 y Libro Casero 2.
+- 10:35: Lavado de manos.
+- 10:40: Refrigerio.
+- 11:00: Recreo.
+- 11:30: Lavado de manos.
+- 11:35: Cuestionamiento sobre la actividad del proyecto realizada ese día.
+- 11:45: Hacer la lectura del libro de Literatura seleccionado, Libro Casero 1, Libro Casero 2 y el abecedario en mayúscula y en desorden.
+- 12:00: Despedida y entrega de alumnos.
+- Libro de Literatura seleccionado: ${literatureBook}.
+
+Horario del viernes:
+
+- 9:05: Hacer la lectura de Palabras Base, Grupo 1 y Grupo 2. Realizar el repaso de las lecturas anteriores de Palabras Base, Grupo 1 y Grupo 2.
+- 9:15: No realizar Gateo y Arrastre. En su lugar, realizar las actividades semanales de escritura temprana.
+- 9:25: Hacer la lectura del Grupo 1, Grupo 2 y Libro Casero 1.
+- De 9:30 a 10:30: Realizar las actividades de la planeación del proyecto, es decir, las actividades que aparecen en la sección superior de esta misma página.
+- 10:30: Hacer la lectura del Grupo 1, Grupo 2 y Libro Casero 2. Realizar el repaso de las lecturas anteriores del Grupo 1, Grupo 2, Libro Casero 1 y Libro Casero 2.
+- 10:35: Lavado de manos.
+- 10:40: Refrigerio.
+- 11:00: Recreo.
+- 11:30: Lavado de manos.
+- 11:35: Cuestionamiento sobre la actividad del proyecto realizada ese día.
+- 11:45: Hacer la lectura del libro de Literatura seleccionado, Libro Casero 1, Libro Casero 2 y el abecedario en minúscula y en desorden.
+- 12:00: Despedida y entrega de alumnos.
+- Libro de Literatura seleccionado: ${literatureBook}.
+
+Cuando un día del proyecto corresponda a una fecha especial o no tenga actividades escolares, respeta la información proporcionada y no inventes horarios ni actividades adicionales. No combines las actividades del Método Filadelfia con las actividades de la planeación: deben aparecer como una sección independiente debajo de cada día.`;
 }
 
 function buildPrompt() {
@@ -250,6 +365,7 @@ ${buildTraitBlock()}
 \t- No incluyas términos en inglés ni anglicismos.
 \t- Devuélveme el archivo .docx con todos los días mencionados anteriormente, tómate el tiempo necesario, no importa que te tardes mucho.
 \t- La primera página debe ser la portada, igual pero con los datos actualizados (para ello, busca información en internet si es necesario, tiene que ser de acuerdo a la Nueva Escuela Mexicana).
+\t- Después de la portada, coloca cada día en una página independiente.
 \t- El nombre, la justificación de la metodología, problemática (menciona el grupo de ${groupName}), tiempo (basándote en los días, expresado en semanas) y propósito tú invéntalos basándote en toda la información siguiente:
 \t\t- El campo formativo es: ${valueOr("formativeField", "[INSERTAR CAMPO FORMATIVO]")}
 \t\t- El contenido es: ${valueOr("content", "[INSERTAR CONTENIDO]")}
@@ -257,7 +373,8 @@ ${buildTraitBlock()}
 \t\t- El eje articulador es: ${valueOr("axis", "[INSERTAR EJE ARTICULADOR]")}
 \t\t- Perfil de egreso: ${valueOr("graduateProfile", "[INSERTAR EL RASGO ADECUADO]")}
 ${buildAssessmentBlock(assessmentType)}
-${asBullets(students, "[LISTA DE ALUMNOS]")}`;
+- Evalúa a los siguientes alumnos:
+${asBullets(students, "[LISTA DE ALUMNOS]")}${buildMethodPhiladelphiaBlock()}`;
 }
 
 function updateCounters(prompt) {
