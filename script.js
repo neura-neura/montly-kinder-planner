@@ -32,6 +32,7 @@ const fieldIds = [
   "pda",
   "graduateProfile",
   "assessmentType",
+  "rubricDocument",
   "students",
 ];
 
@@ -216,6 +217,12 @@ function buildSpecialDatesBlock() {
   return `. Para las fechas especiales, toma en cuenta lo siguiente:\n${asBullets(lines)}\nAsí que vas a hacer actividades relacionadas con esto.`;
 }
 
+function buildAssessmentBlock(assessmentType) {
+  const rubricDocument = valueOr("rubricDocument", "[NOMBRE DEL DOCUMENTO DE LA RÚBRICA]");
+
+  return `- Después de la portada, cada día tiene que estar en una página. En seguida de eso, elabora una ${assessmentType} tomando en cuenta el Contenido y el Proceso de Desarrollo de Aprendizaje del proyecto, esta debe servir para evaluar el proyecto. Utiliza el documento ${rubricDocument}, en este se encuentra la plantilla, toma todos los datos de ahí para que la completes, los alumnos a los que se van a evaluar son los siguientes:`;
+}
+
 function buildPrompt() {
   const docs = linesFrom(getValue("activityDocs"));
   const students = linesFrom(getValue("students"));
@@ -249,7 +256,7 @@ ${buildTraitBlock()}
 \t\t- El Proceso de Desarrollo de Aprendizaje (PDA) es: ${valueOr("pda", "[INSERTAR PDA]")}
 \t\t- El eje articulador es: ${valueOr("axis", "[INSERTAR EJE ARTICULADOR]")}
 \t\t- Perfil de egreso: ${valueOr("graduateProfile", "[INSERTAR EL RASGO ADECUADO]")}
-\t- Después de la portada, cada día tiene que estar en una página. En seguida de eso, elabora una ${assessmentType} tomando en cuenta el Proceso de Desarrollo de Aprendizaje del proyecto, esta debe servir para evaluar el proyecto. Los alumnos a los que se van a evaluar son los siguientes:
+${buildAssessmentBlock(assessmentType)}
 ${asBullets(students, "[LISTA DE ALUMNOS]")}`;
 }
 

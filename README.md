@@ -6,7 +6,7 @@ The tool helps teachers fill in project details step by step, preview the final 
 
 ## Features
 
-- Ordered form for project file, month, methodology, dates, activities, curriculum data, and assessment type.
+- Ordered form for project file, month, methodology, dates, activities, curriculum data, assessment type, and rubric template document.
 - Live prompt preview that updates as the form changes.
 - Copy generated prompt to the clipboard.
 - Download generated prompt as a TXT file.
