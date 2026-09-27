@@ -6,7 +6,7 @@ The tool helps teachers fill in project details step by step, preview the final 
 
 ## Features
 
-- Ordered form for project file, month, methodology, dates, activities, curriculum data, assessment type, rubric template document, and the selected Literature book for the Método Filadelfia schedule.
+- Ordered form for project file, month, methodology, dates, activities, curriculum data, assessment type, rubric template document, and the Método Filadelfia schedule with a blank Literature-book space for each day.
 - Live prompt preview that updates as the form changes.
 - Copy generated prompt to the clipboard.
 - Download generated prompt as a TXT file.

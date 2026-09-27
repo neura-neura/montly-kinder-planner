@@ -34,7 +34,6 @@ const fieldIds = [
   "assessmentType",
   "rubricDocument",
   "students",
-  "literatureBook",
 ];
 
 const dom = {
@@ -227,10 +226,7 @@ function buildAssessmentBlock(assessmentType) {
 }
 
 function buildMethodPhiladelphiaBlock() {
-  const literatureBook = valueOr(
-    "literatureBook",
-    "[ESPACIO PARA INCLUIR EL NOMBRE DEL LIBRO DE LITERATURA SELECCIONADO]",
-  );
+  const literatureBookSpace = "____________________________________________";
 
   return `
 
@@ -267,7 +263,7 @@ Horario del lunes:
 - 11:35: Cuestionamiento sobre la actividad del proyecto realizada ese día.
 - 11:45: Leer el libro de Literatura seleccionado. Después, hacer la lectura del Libro Casero 1, Libro Casero 2 y el abecedario en minúscula, en orden.
 - 12:00: Despedida y entrega de alumnos.
-- Libro de Literatura seleccionado: ${literatureBook}.
+- Libro de Literatura seleccionado: ${literatureBookSpace}
 
 Horario del martes:
 
@@ -284,7 +280,7 @@ Horario del martes:
 - 11:35: Cuestionamiento sobre la actividad del proyecto realizada ese día.
 - 11:45: Hacer la lectura del libro de Literatura seleccionado, Libro Casero 1, Libro Casero 2 y el abecedario en mayúscula, en orden.
 - 12:00: Despedida y entrega de alumnos.
-- Libro de Literatura seleccionado: ${literatureBook}.
+- Libro de Literatura seleccionado: ${literatureBookSpace}
 
 Horario del miércoles:
 
@@ -300,7 +296,7 @@ Horario del miércoles:
 - 11:35: Cuestionamiento sobre la actividad del proyecto realizada ese día.
 - 11:45: Hacer la lectura del libro de Literatura seleccionado, Libro Casero 1, Libro Casero 2 y el abecedario en minúscula y en desorden.
 - 12:00: Despedida y entrega de alumnos.
-- Libro de Literatura seleccionado: ${literatureBook}.
+- Libro de Literatura seleccionado: ${literatureBookSpace}
 
 Horario del jueves:
 
@@ -317,7 +313,7 @@ Horario del jueves:
 - 11:35: Cuestionamiento sobre la actividad del proyecto realizada ese día.
 - 11:45: Hacer la lectura del libro de Literatura seleccionado, Libro Casero 1, Libro Casero 2 y el abecedario en mayúscula y en desorden.
 - 12:00: Despedida y entrega de alumnos.
-- Libro de Literatura seleccionado: ${literatureBook}.
+- Libro de Literatura seleccionado: ${literatureBookSpace}
 
 Horario del viernes:
 
@@ -333,7 +329,7 @@ Horario del viernes:
 - 11:35: Cuestionamiento sobre la actividad del proyecto realizada ese día.
 - 11:45: Hacer la lectura del libro de Literatura seleccionado, Libro Casero 1, Libro Casero 2 y el abecedario en minúscula y en desorden.
 - 12:00: Despedida y entrega de alumnos.
-- Libro de Literatura seleccionado: ${literatureBook}.
+- Libro de Literatura seleccionado: ${literatureBookSpace}
 
 Cuando un día del proyecto corresponda a una fecha especial o no tenga actividades escolares, respeta la información proporcionada y no inventes horarios ni actividades adicionales. No combines las actividades del Método Filadelfia con las actividades de la planeación: deben aparecer como una sección independiente debajo de cada día.`;
 }
